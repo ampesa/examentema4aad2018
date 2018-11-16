@@ -61,6 +61,7 @@
     <string name="spn_add_product_country_germany">Germany</string>
     <string name="spn_add_product_country_spain">Spain</string>
     <string name="spn_add_product_country_usa">USA</string>
+    <string name="sv_add_product_sold">Vendido</string>
     <string name="toast_buy_confirmation">FELICIDADES Has comprado un producto</string>
     <string name="toast_product_add_ok">Enhorabuena! se ha subido tu producto</string>
     <string name="toast_product_no_description">Por favor, añade una descripción de lo que vendes</string>

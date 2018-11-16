@@ -96,5 +96,6 @@
     <string name="spn_add_product_country_france">France</string>
     <string name="spn_add_product_country_germany">Germany</string>
     <string name="spn_add_product_country_usa">USA</string>
+    <string name="sv_add_product_sold">Mark as sold</string>
 
 </resources>

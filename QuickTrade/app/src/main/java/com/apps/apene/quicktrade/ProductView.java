@@ -65,6 +65,8 @@ public class ProductView extends AppCompatActivity {
     protected Product product = null;
     // Objeto BBDD
     protected DatabaseReference mDataBase;
+    // String para marcar el producto como viejo
+    protected String isOld = "no";
 
 
 
@@ -87,6 +89,8 @@ public class ProductView extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         sUserUID = mAuth.getUid();
 
+        getData();
+
         // Referencia de la bbdd sobre el nodo "products"
         mDataBase = FirebaseDatabase.getInstance().getReference(getString(R.string.db_node_products));
 
@@ -95,21 +99,6 @@ public class ProductView extends AppCompatActivity {
 
         getProductValues(selectedProductData);
 
-
-        // Acciones del botón BUY / EDIT
-        mButtonBuy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Si el el boton EDIT contiene "edit" lo cambiamos a "save" y hacemos editables los EditText
-                if (mButtonBuy.getText().equals(getString(R.string.bt_product_buy))){
-                    Toast.makeText(getApplicationContext(), getString(R.string.toast_buy_confirmation), Toast.LENGTH_LONG).show();
-                } else { // Si no, hacemos lo contrario
-                    Intent goToAddProduct = new Intent(ProductView.this, AddProduct.class);
-                    goToAddProduct.putExtra("key", key);
-                    startActivity(goToAddProduct);
-                }
-            }
-        });
 
     }
 
@@ -157,6 +146,22 @@ public class ProductView extends AppCompatActivity {
                         }
                     });
                 } catch (IOException e ) {}
+
+                // Acciones del botón BUY / EDIT
+                mButtonBuy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Si el botón es comprar mostramos un toast confirmando la compra
+                        if (mButtonBuy.getText().equals(getString(R.string.bt_product_buy))){
+                            Toast.makeText(getApplicationContext(), getString(R.string.toast_buy_confirmation), Toast.LENGTH_LONG).show();
+                        } else { // Si no, llevamos al usuario a la actividad de addproduct
+                            //isOld = "yes";
+                            Intent goToAddProduct = new Intent(ProductView.this, AddProduct.class);
+                            goToAddProduct.putExtra("key", key);
+                            startActivity(goToAddProduct);
+                        }
+                    }
+                });
             }
 
             @Override
@@ -165,6 +170,11 @@ public class ProductView extends AppCompatActivity {
             }
         });
 
+    }
+
+    protected void getData(){
+        Bundle extras = getIntent().getExtras();
+        key = extras.getString("key");
     }
 
 }

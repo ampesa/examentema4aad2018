@@ -141,14 +141,25 @@
             android:layout_marginStart="40dp"/>
 
         <TextView
-            android:id="@+id/et_addproduct_price_currency"
+        android:id="@+id/et_addproduct_price_currency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_add_product_euro"
+        android:layout_below="@+id/tv_addproduct_price_label"
+        android:layout_toEndOf="@id/et_addproduct_price"
+        android:layout_alignBaseline="@id/et_addproduct_price"
+        android:layout_marginStart="5dp"/>
+
+        <Switch
+            android:id="@+id/sv_addproduct_sold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tv_add_product_euro"
+            android:text="@string/sv_add_product_sold"
             android:layout_below="@+id/tv_addproduct_price_label"
-            android:layout_toEndOf="@id/et_addproduct_price"
+            android:layout_toEndOf="@id/et_addproduct_price_currency"
             android:layout_alignBaseline="@id/et_addproduct_price"
-            android:layout_marginStart="5dp"/>
+            android:layout_marginStart="40dp"
+            android:visibility="invisible" />
 
         <Button
             android:layout_width="match_parent"

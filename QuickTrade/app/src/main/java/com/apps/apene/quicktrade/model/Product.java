@@ -15,6 +15,7 @@ public class Product implements Serializable {
     private String sellerUID;
     private String time;
     private String key;
+    private String sold;
 
 
     // Constructores de Product
@@ -49,6 +50,22 @@ public class Product implements Serializable {
         this.sellerUID = sellerUID;
         this.time = time;
         this.key = key;
+    }
+
+    // Constructor para añadir la clave
+    public Product (String title, String description, String category, String image, String  price, String country, String zip,
+                    String sellerUID, String time, String key, String sold) {
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.image = image;
+        this.price = price;
+        this.country = country;
+        this.zip = zip;
+        this.sellerUID = sellerUID;
+        this.time = time;
+        this.key = key;
+        this.sold = sold;
     }
 
     // Getters y Setters
@@ -117,20 +134,6 @@ public class Product implements Serializable {
         this.key = key;
     }
 
-    // Método toString()
-    @Override
-    public String toString() {
-        return "Product{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", price='" + price + '\'' +
-                ", country='" + country + '\'' +
-                ", zip='" + zip + '\'' +
-                ", sellerUID='" + sellerUID + '\'' +
-                ", time='" + time + '\'' +
-                '}';
-    }
-
     public String getCategory() {
         return category;
     }
@@ -146,4 +149,28 @@ public class Product implements Serializable {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public String getSold() {
+        return sold;
+    }
+
+    public void setSold(String sold) {
+        this.sold = sold;
+    }
+
+    // Método toString()
+    @Override
+    public String toString() {
+        return "Product{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", price='" + price + '\'' +
+                ", country='" + country + '\'' +
+                ", zip='" + zip + '\'' +
+                ", sellerUID='" + sellerUID + '\'' +
+                ", time='" + time + '\'' +
+                '}';
+    }
+
+
 }

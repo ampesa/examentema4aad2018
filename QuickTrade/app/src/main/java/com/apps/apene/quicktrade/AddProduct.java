@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,7 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
     protected String sUserUID = null;
     protected String sImage = null;
     protected String sParent = null;
+    protected Switch mSold = null;
     // Identificador del Intent para el resultado de abrir la galería
     protected static final int GALLERY_INTENT = 100;
     // Objteo URI para la ruta de la imagen
@@ -73,6 +75,9 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
 
     // Objeto BBDD
     protected DatabaseReference mDataBase;
+
+    // String que recoge la clave del producto a editar
+    protected String productEditKey = null;
 
     // Objeto Product de la vista de producto
     Product previousProduct = null;
@@ -95,6 +100,10 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
         mProductCountry = findViewById(R.id.spn_addproduct_country);
         mProductZip = findViewById(R.id.et_addproduct_zip);
         mButtonAdd = findViewById(R.id.bt_addproduct_add);
+        mSold = findViewById(R.id.sv_addproduct_sold);
+
+        // Iniciamos el switch como desactivado
+        mSold.setChecked(false);
 
         // Referencia del Adaptador Firebase
         fbAdapter = new FirebaseAdapter(this);
@@ -143,8 +152,12 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
         mButtonAdd.setOnClickListener(this);
 
         // Si venimos de la vista de producto para editar el producto hacemos lo siguiente
-        String productEditKey = getIntent().getStringExtra("key");
+        productEditKey = getIntent().getStringExtra("key");
+
+        // Si hay clave de producto es que venimos de la vista del producto y no lo estamos añadiendo nuevo
         if (productEditKey != null){
+            // Hacemos visible el switch Mark as sold
+            mSold.setVisibility(View.VISIBLE);
             // Referencia de la bbdd sobre el nodo "products"
             mDataBase = FirebaseDatabase.getInstance().getReference(getString(R.string.db_node_products));
 
@@ -186,13 +199,14 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
                                 String zip = mProductZip.getText().toString();
                                 String sellerUID = sUserUID;
                                 String time = Calendar.getInstance().getTime().toString();
+                                String sold = "no";
                                 // Si el objeto Uri no es nulo, el usuario ha cargado una imagen y la asignamos al
                                 // atributo del objteo p. En otro caso asignamos el nombre de la imagen por defecto
                                 if (imageURI != null){
                                     image = imageURI.toString();
                                     // Creamos un nuevo Product y le pasamos los datos
                                     Product p = new Product(title, description, category, image, price,
-                                            country, zip, sellerUID, time);
+                                            country, zip, sellerUID, time, sold);
                                     // Guardamos la imagen el el Strorage llamando al métoddo addProduct con el Product "p" como parámetro
                                     // nos devuelve un string con la clave del producto para usarlo como nombre de la imagen
                                     // de esta manera podremos recuperar la imagen del Storage y asignarla al producto en las búsquedas
@@ -204,13 +218,23 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
                                     Intent goToProductView = new Intent(getApplicationContext(), ProductView.class);
                                     goToProductView.putExtra("key", productKey);
                                     startActivity(goToProductView);
-                                } else {
+                                } else if (imageURI == null){
                                     // Si no se ha añadido una imagen
                                     // Hacemos lo mismo pero no guardamos nada en el Storage y la imagen será la imagen por defecto
                                     image = sImage;
                                     Product p = new Product(title, description, category, image, price,
-                                            country, zip, sellerUID, time);
+                                            country, zip, sellerUID, time, sold);
                                     String productKey = fbAdapter.addProduct(p);
+                                    Intent goToProductView = new Intent(getApplicationContext(), ProductView.class);
+                                    goToProductView.putExtra("key", productKey);
+                                    startActivity(goToProductView);
+                                } else if (mSold.isChecked()){
+                                    // Si se ha marcado como vendido hacemos lo mismo pero añadimos un nuevo string al constructor Product
+                                    sold = "yes";
+                                    image = sImage;
+                                    Product p = new Product(title, description, category, image, price,
+                                            country, zip, sellerUID, time, sold);
+                                    String productKey = fbAdapter.uploadProduct(p, sParent);
                                     Intent goToProductView = new Intent(getApplicationContext(), ProductView.class);
                                     goToProductView.putExtra("key", productKey);
                                     startActivity(goToProductView);

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\apene\\Desktop\\AndroidStudioProjects\\QuickTrade\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-nb\\values-nb.xml",
+            "outputFile": "C:\\Users\\apene\\Desktop\\ExamenTema4aadBis\\QuickTrade\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-nb\\values-nb.xml",
             "map": [
                 {
                     "source": "C:\\Users\\apene\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-basement-15.0.1.aar\\efaccc1d7742ff3b4af13e04b5aadb34\\res\\values-nb\\values.xml",

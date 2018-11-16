@@ -886,6 +886,7 @@ id start
 id status_bar_latest_event_content
 id submenuarrow
 id submit_area
+id sv_addproduct_sold
 id tabMode
 id tag_transition_group
 id tag_unhandled_key_event_manager
@@ -1148,6 +1149,7 @@ string spn_add_product_country_germany
 string spn_add_product_country_spain
 string spn_add_product_country_usa
 string status_bar_notification_info_overflow
+string sv_add_product_sold
 string toast_buy_confirmation
 string toast_product_add_ok
 string toast_product_no_description

@@ -136,7 +136,7 @@ public class FirebaseAdapter {
         mAuth.sendPasswordResetEmail(email);
     }
 
-    // Método para guardar datos de un nuevo usuario en Firebase Real Time Database
+    // Método para guardar datos de un nuevo producto en Firebase Real Time Database
     public String addProduct(Product p){
         // Situamos el adaptador en el nodo products
         mDataBase = FirebaseDatabase.getInstance().getReference(context.getString(R.string.db_node_products));
@@ -152,6 +152,17 @@ public class FirebaseAdapter {
         return key;
     } // fin método addProduct()
 
+    // Método para guardar datos de un nuevo producto en Firebase Real Time Database
+    public String uploadProduct(Product p, String key){
+        // Situamos el adaptador en el nodo products
+        mDataBase = FirebaseDatabase.getInstance().getReference(context.getString(R.string.db_node_products));
+        // Añadimos el Product "p" como hijo del nodo referenciado
+        mDataBase.child(key).setValue(p);
+        // Mostramos un Toast confirmando que se ha añadido el producto
+        Toast.makeText(context, context.getString(R.string.toast_product_add_ok),
+                Toast.LENGTH_LONG).show();
+        return key;
+    } // fin método uploadProduct()
     /*
     // Registramos el usuario en segundo plano pasando un objeto User con los datos introducidos y
     // obtenemos un objteo FirebaseUser con el que confirmaremos el método saveUser
